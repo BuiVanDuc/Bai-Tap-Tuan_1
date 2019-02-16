@@ -88,7 +88,15 @@ def is_leap_year(date):
 
 
 def standardize_string(text):
-    pass
+    # Check input end standardize top and end string
+    if text:
+        new_str_1= standardize_top_and_end_string(text)
+        if new_str_1:
+            new_str_2 = standardize_tab_in_str(new_str_1)
+            if new_str_2:
+                new_str_3 = standardize_comma_and_point_in_str(new_str_2)
+                if new_str_3:
+                    return new_str_3
 
 
 def find_ucln_bcnn(number_1, number_2):
@@ -167,3 +175,91 @@ def revert_string(text):
         return new_text
 
 
+def standardize_top_and_end_string(text):
+    i = 0
+    flag = 0
+    last_index = 0
+    start_index = 0
+
+    while i <= len(text) - 1:
+        if flag == 0:
+            if text[i] != ' ' and text[i] != ',' and text[i] != '.':
+                start_index = i
+                flag += 1
+        else:
+            if text[i] != ' ' and text[i] != ',' and text[i] != '.':
+                last_index = i
+        i += 1
+    if last_index == 0 and start_index == 0:
+        print " Chuoi khong co ky tu"
+        return text
+    elif start_index != 0 and last_index == 0:
+        print text[start_index]
+        return text[start_index]
+    else:
+        if last_index <= len(text) - 2:
+            if text[last_index + 1] == "," or text[last_index + 1] == ".":
+                last_index = last_index + 1
+
+    new_str_1 = text[start_index:last_index + 1]
+
+    return new_str_1
+
+
+# Input is text is  standardize top and end string
+def standardize_tab_in_str(text):
+    number_tab = 0
+    new_str = ""
+    count = 0
+
+    for elemt in text:
+        temp_str = elemt
+        if temp_str == " ":
+            number_tab += 1
+            if number_tab > 1:
+                temp_str = ''
+                number_tab = 1
+        else:
+            count += 1
+            if count > 1:
+                number_tab = 0
+        new_str += temp_str
+
+    return new_str
+
+
+# Input is text is  standardize tab in str
+def standardize_comma_and_point_in_str(text):
+    i = 0
+    new_str = ""
+
+    while i < len(text):
+        flag_1 = 0
+        tem_str = text[i]
+        if text[i] == ',' or text[i] == '.':
+            for j in range(i + 1, len(text) - 1):
+                # find to index is alphabet
+                if text[j] != '.' and text[j] != ',' and text[j] != ' ':
+                    tem_str = text[i] + " "
+                    i = j
+                    flag_1 = 1
+                    break
+        elif text[i] == ' ':
+            flag_2 = 0
+            for j in range(i + 1, len(text) - 1):
+                if text[j] == '.' or text[j] == ',':
+                    if flag_2 == 0:
+                        tem_str = text[j] + ' '
+                        flag_2 = 1
+                # find to index is alphabet
+                elif text[j] != '.' and text[j] != ',' and text[j] != ' ':
+                    if flag_2 == 0:
+                        tem_str = text[i]
+                    i = j
+                    flag_1 = 1
+                    break
+
+        new_str += tem_str
+        if flag_1 == 0:
+            i += 1
+    return new_str
