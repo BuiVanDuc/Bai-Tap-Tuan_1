@@ -196,12 +196,11 @@ def standardize_top_and_end_string(text):
     elif start_index != 0 and last_index == 0:
         print text[start_index]
         return text[start_index]
-    else:
-        if last_index <= len(text) - 2:
-            if text[last_index + 1] == "," or text[last_index + 1] == ".":
-                last_index = last_index + 1
 
-    new_str_1 = text[start_index:last_index + 1]
+    new_str_1 = text[start_index:last_index+1]
+
+    if text[-1:] == '.':
+        new_str_1 = new_str_1 + '.'
 
     return new_str_1
 
@@ -212,8 +211,8 @@ def standardize_tab_in_str(text):
     new_str = ""
     count = 0
 
-    for elemt in text:
-        temp_str = elemt
+    for element in text:
+        temp_str = element
         if temp_str == " ":
             number_tab += 1
             if number_tab > 1:
@@ -228,7 +227,7 @@ def standardize_tab_in_str(text):
     return new_str
 
 
-# Input is text is  standardize tab in str
+# Input is text and is standardize tab in str
 def standardize_comma_and_point_in_str(text):
     i = 0
     new_str = ""
